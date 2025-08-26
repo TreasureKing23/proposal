@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Examiners List</h1>
+<p>
+    <a href="{{url_for('add_examiner')}}">
+        <button>Add </button>
+    </a>
+</p>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thread>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Rank</th>
+            <th>Status</th>
+            <th>Region</th>
+        </tr>
+    </thread>
+    <tbody>
+        {% for ex in examiners%}
+        <tr>
+            <td>{{ ex['Name'] }}</td>
+            <td>{{ ex['Address'] }}</td>
+            <td>{{ ex['ContactNumber'] }}</td>
+            <td>{{ ex['Rank'] }}</td>
+            <td>{{ ex['Status'] }}</td>
+            <td>{{ ex['Region'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%endblock%}

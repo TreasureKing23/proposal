@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>SchoolList</h1>
+
+<p>
+    <a href="{{url_for('add_school')}}">
+        <button>Add New School</button>
+    </a>
+</p>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thread>
+        <tr>
+            <th>School Code</th>
+            <th>Name</th>
+            <th>Region</th>
+        </tr>
+    </thread>
+    <tbody>
+        {% for school in schools%}
+        <tr>
+            <td>{{ school['SchoolCode'] }}</td>
+            <td>{{ school['Name'] }}</td>
+            <td>{{ school['Region'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%endblock%}

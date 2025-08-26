@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>SchoolList</h1>
+<form method="POST">
+    <p>
+        <label>School Code:</label>
+        <input type="text" name="school_code" required>
+    </p>
+    <p>
+        <label>Name:</label>
+        <input type="text" name="name" required>
+    </p>
+    <p>
+        <label>Region:</label>
+        <select name="region" required>
+            <option value="">-- Select Region --</option>
+            {% for region in regions %}
+                <option value="{{ region['Number']}}">
+                    {{ region['Number'] }} - {{ region['Name']}}
+                </option>
+            {%endfor%}
+        </select>
+    </p>
+    <p>
+        <button type="submit">Add School</button>
+    </p>
+</form>
+{% endblock %}
