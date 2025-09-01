@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>add</h1>
+<form method="POST">
+    <p>
+        <label>Name:</label>
+        <select name="name" id="examiner-select" required>
+            <option value="">-- Select Examiner --</option>
+            {% for e in examiners %}
+                <option value = "{{ e['Name']}}" data-id="{{ e['Id'] }}">
+                    {{ e['Name']}}
+                </option>
+            {%endfor%}
+        </select>
+        <input type ="hidden" name="examinerid" id="examiner-id">
+    </p>
+    <p>
+        <label>Exam:</label>
+        <select name="exam" required>
+            <option value="">-- Select Exam --</option>
+            {% for ex in exams %}
+                <option value = "{{ ex['Name']}}">
+                    {{ ex['Name']}}
+                </option>
+            {%endfor%}
+        </select>   
+    </p>
+    <p>
+        <label>Year:</label>
+        <input type="text" name="year" required>
+    </p>
+    <p>
+        <label>Score:</label>
+        <input type="number" name="score" min="0" max="100" required>
+    </p>
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+</form>
+<script>
+    document.getElementById('examiner-select').addEventListener('change',function(){
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('examiner-id').value = selectedOption.dataset.id;
+    });
+</script>
+{% endblock %}

@@ -84,11 +84,36 @@ def assessmentpage():
 @app.route('/input_scores', methods =['GET','POST'])
 def inputpage():
     db = get_db()
+    if request.method == "POST":
+        examinerid= request.form['examinerid']
+        name= request.form['name']
+        exam= request.form['exam']
+        score= int(request.form['score'])
+        year= request.form['year']
 
+        if not examinerid:
+            return "No examiner selected"
+        examinerid = int(examinerid)
+        if 0 <= score <= 100:
+            if score >= 85:
+                rank = "Presiding Examiner"
+            elif score >= 70:
+                rank = "Invigilator"
+            else:
+                rank = "Not Qualified"
+        try:
+            db.execute('INSERT INTO Assessment(ExaminerId, Name, Exam, Score, Year) VALUES (?,?,?,?,?)',(examinerid, name,exam,score,year))
+            db.execute('UPDATE Examiners SET Rank = ? WHERE Id = ?',(rank, examinerid))
+            db.commit()
 
-    ranks = db.execute('SELECT * FROM Role').fetchall()
-    statuses = db.execute('SELECT Type FROM Status').fetchall()
+            return "Successful"
+        except Exception as e:
+            db.rollback()
+            return f"Error: {e}"
 
+    examiners = db.execute('Select * FROM Examiners').fetchall()
+    exams = db.execute('SELECT Name FROM Exams').fetchall()
+    return render_template('input_scores.html', examiners = examiners, exams = exams)
 
 if __name__ == '__main__':
     app.run(debug=True)
