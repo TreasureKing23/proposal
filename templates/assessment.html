@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Assessments</h1>
+
+<p>
+    
+        <button>Add New </button>
+    </a>
+</p>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thread>
+        <tr>
+            <th>Name</th>
+            <th>Exam</th>
+            <th>Score</th>
+            <th>Year</th>
+        </tr>
+    </thread>
+    <tbody>
+        {% for as in assessments%}
+        <tr>
+            <td>{{ as['Name'] }}</td>
+            <td>{{ as['Exam'] }}</td>
+            <td>{{ as['Score'] }}</td>
+            <td>{{ as['Year'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%endblock%}

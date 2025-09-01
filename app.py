@@ -3,6 +3,9 @@ import sqlite3
 
 app = Flask(__name__)
 
+PE_MIN = 85
+INVIG_MIN = 70
+
 DATABASE = 'testdb'
 
 def get_db():
@@ -71,6 +74,20 @@ def add_examiner():
     statuses = db.execute('SELECT Type FROM Status').fetchall()
     return render_template('add_examiners.html', regions=regions, ranks=ranks, statuses = statuses)
 
+@app.route('/assessment', methods=['GET','POST'])
+def assessmentpage():
+    db = get_db()
+    query = 'SELECT * FROM Assessment'
+    ass = db.execute(query).fetchall()
+    return render_template('assessment.html', assessments = ass)
+
+@app.route('/input_scores', methods =['GET','POST'])
+def inputpage():
+    db = get_db()
+
+
+    ranks = db.execute('SELECT * FROM Role').fetchall()
+    statuses = db.execute('SELECT Type FROM Status').fetchall()
 
 
 if __name__ == '__main__':
