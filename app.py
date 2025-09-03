@@ -1,5 +1,6 @@
 from flask import Flask, render_template, g,request,redirect,url_for
 import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -89,7 +90,7 @@ def inputpage():
         name= request.form['name']
         exam= request.form['exam']
         score= int(request.form['score'])
-        year= request.form['year']
+        year = datetime.now().year
 
         if not examinerid:
             return "No examiner selected"
@@ -105,8 +106,35 @@ def inputpage():
             db.execute('INSERT INTO Assessment(ExaminerId, Name, Exam, Score, Year) VALUES (?,?,?,?,?)',(examinerid, name,exam,score,year))
             db.execute('UPDATE Examiners SET Rank = ? WHERE Id = ?',(rank, examinerid))
             db.commit()
+            return redirect(url_for('assessmentpage'))
 
-            return "Successful"
+        except Exception as e:
+            db.rollback()
+            return f"Error: {e}"
+
+    examiners = db.execute('Select * FROM Examiners').fetchall()
+    exams = db.execute('SELECT Name FROM Exams').fetchall()
+    return render_template('input_scores.html', examiners = examiners, exams = exams)
+
+
+
+@app.route('/post_exam', methods =['GET','POST'])
+def postexampage():
+    db = get_db()
+    if request.method == "POST":
+        examinerid= request.form['examinerid']
+        name= request.form['name']
+        exam= request.form['exam']
+        date = request.form['date']
+        status = request.form['status']
+        comment = request.form['comment']
+
+        try:
+            db.execute('INSERT INTO Postexamassessment(Name, Exam, Comment, Date) VALUES (?,?,?,?)',(name,exam,comment,date))
+            db.execute('UPDATE Examiners SET Status = ? WHERE Id = ?',(status, examinerid))
+            db.commit()
+            return redirect(url_for('postexampage'))
+
         except Exception as e:
             db.rollback()
             return f"Error: {e}"
