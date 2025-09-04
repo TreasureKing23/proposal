@@ -7,7 +7,7 @@
         <select name="name" id="examiner-select" required>
             <option value="">-- Select Examiner --</option>
             {% for e in examiners %}
-                <option value = "{{ e['Name']}}" data-id="{{ e['Id'] }}">
+                <option value = "{{ e['Name']}}" data-id="{{ e['Id'] }}" data-status="{{ e['Status']}}">
                     {{ e['Name']}}
                 </option>
             {%endfor%}
@@ -26,17 +26,48 @@
         </select>   
     </p>
     <p>
-        <label>Score:</label>
-        <input type="number" name="score" min="0" max="100" required>
+        <label>Comments:</label><br>
+        <textarea  name="comment"style="width: 300px; height: 50px;"></textarea>
+    </p>
+    <p>
+        <label>Current Status:</label>
+        <input type="text" id="current-status" readonly disabled>
+
+    </p>
+    <p>
+        <button type="button" id="show-status-update">Update Status</button>
+    </p>
+    <p id="status-update-section" style="display: none;">
+        <label>New Status:</label>
+        <select name="status">
+            <option value="">-- Select New Status --</option>
+            {% for s in statuses%}
+                <option value="{{ s['Type']}}">
+                    {{ s['Type']}}
+                </option>
+            {%endfor%}
+            
+        </select>
+
     </p>
     <p>
         <button type="submit">Submit</button>
     </p>
 </form>
 <script>
-    document.getElementById('examiner-select').addEventListener('change',function(){
+    const examinerSelect = document.getElementById('examiner-select');
+    const examinerIdInput = document.getElementById('examiner-id')
+    const currentStatusField = document.getElementById('current-status')
+
+    examinerSelect.addEventListener('change',function(){
         const selectedOption = this.options[this.selectedIndex];
-        document.getElementById('examiner-id').value = selectedOption.dataset.id;
+        examinerIdInput.value = selectedOption.dataset.id;
+        currentStatusField.value = selectedOption.dataset.status || "";
+
     });
+
+    document.getElementById('show-status-update').addEventListener('click', function(){
+        document.getElementById('status-update-section').style.display = 'block';
+    })
 </script>
 {% endblock %}

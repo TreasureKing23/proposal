@@ -125,13 +125,17 @@ def postexampage():
         examinerid= request.form['examinerid']
         name= request.form['name']
         exam= request.form['exam']
-        date = request.form['date']
+        date = datetime.now().strftime("%Y-%m-%d")
         status = request.form['status']
         comment = request.form['comment']
 
+        new_status = request.form.get('status', '').strip()
         try:
-            db.execute('INSERT INTO Postexamassessment(Name, Exam, Comment, Date) VALUES (?,?,?,?)',(name,exam,comment,date))
-            db.execute('UPDATE Examiners SET Status = ? WHERE Id = ?',(status, examinerid))
+            db.execute('INSERT INTO PostExamAssessment(Name, Exam, Comment, Date) VALUES (?,?,?,?)',(name,exam,comment,date))
+            
+            if new_status:
+                db.execute('UPDATE Examiners SET Status = ? WHERE Id = ?',(status, examinerid))
+            
             db.commit()
             return redirect(url_for('postexampage'))
 
@@ -141,7 +145,8 @@ def postexampage():
 
     examiners = db.execute('Select * FROM Examiners').fetchall()
     exams = db.execute('SELECT Name FROM Exams').fetchall()
-    return render_template('input_scores.html', examiners = examiners, exams = exams)
+    statuses = db.execute('SELECT * FROM Status').fetchall()
+    return render_template('post_exam.html', examiners = examiners, exams = exams, statuses = statuses)
 
 if __name__ == '__main__':
     app.run(debug=True)
