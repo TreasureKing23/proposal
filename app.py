@@ -116,6 +116,11 @@ def inputpage():
     exams = db.execute('SELECT Name FROM Exams').fetchall()
     return render_template('input_scores.html', examiners = examiners, exams = exams)
 
+@app.route('/view_post_exam', methods=['GET','POST'])
+def viewpostexampage():
+    db = get_db()
+    vpe = db.execute('SELECT * FROM PostExamAssessment').fetchall()
+    return render_template('view_post_exam.html', viewpostexam = vpe)
 
 
 @app.route('/post_exam', methods =['GET','POST'])
@@ -137,7 +142,7 @@ def postexampage():
                 db.execute('UPDATE Examiners SET Status = ? WHERE Id = ?',(status, examinerid))
             
             db.commit()
-            return redirect(url_for('postexampage'))
+            return redirect(url_for('viewpostexampage'))
 
         except Exception as e:
             db.rollback()

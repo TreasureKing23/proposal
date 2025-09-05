@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Post Exam Assessments</h1>
+
+<p>
+    <a href="{{url_for('postexampage')}}">
+        <button>Add </button>
+    </a>
+</p>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thread>
+        <tr>
+            <th>Name</th>
+            <th>Exam</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+    </thread>
+    <tbody>
+        {% for vpe in viewpostexam%}
+        <tr>
+            <td>{{ vpe['Name'] }}</td>
+            <td>{{ vpe['Exam'] }}</td>
+            <td class = "comment-cell">{{ vpe['Comment'] }}</td>
+            <td>{{ vpe['Date'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{%endblock%}
+
+<style>
+    .comment-cell{
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 300px;
+        vertical-align: top;
+    }
+</style>
