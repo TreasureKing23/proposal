@@ -1,4 +1,63 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
-<h1>Welcome to home page</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Welcome to the Examiner Management System</h1>
+            <p class="text-muted">Use the menu or the quick links below to navigate.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Schools -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Schools</h5>
+                        <p class="card-text text-muted">View and manage registered schools.</p>
+                        <a href="{{ url_for('schoolpage') }}" class="btn btn-primary">Go to Schools</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examiners -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Examiners</h5>
+                        <p class="card-text text-muted">View, add, and manage examiners.</p>
+                        <a href="{{ url_for('examinerpage') }}" class="btn btn-success">Go to Examiners</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assessments -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Assessments</h5>
+                        <p class="card-text text-muted">Record and review examiner performance.</p>
+                        <a href="{{ url_for('assessmentpage') }}" class="btn btn-warning">Go to Assessments</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Exam -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Post Exam</h5>
+                        <p class="card-text text-muted">Manage post-exam assessments and feedback.</p>
+                        <a href="{{ url_for('viewpostexampage') }}" class="btn btn-danger">Go to Post Exam</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extra: Input Scores Shortcut -->
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('inputpage') }}" class="btn btn-outline-dark btn-lg">➕ Input Examiner Scores</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

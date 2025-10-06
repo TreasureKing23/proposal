@@ -153,5 +153,53 @@ def postexampage():
     statuses = db.execute('SELECT * FROM Status').fetchall()
     return render_template('post_exam.html', examiners = examiners, exams = exams, statuses = statuses)
 
+@app.route('/edit-examiner/<int:examiner_id>', methods=['GET', 'POST'])
+def edit_examiner(examiner_id):
+    db = get_db()
+
+    if request.method == 'POST':
+        name = request.form['name']
+        address = request.form['address']
+        contactnumber = request.form['contactnumber']
+        rank = request.form['rank']
+        status = request.form['status']
+        region = request.form['region']
+
+        db.execute('''
+            UPDATE Examiners
+            SET Name = ?, Address = ?, ContactNumber = ?, Rank = ?, Status = ?, Region = ?
+            WHERE Id = ?
+        ''', (name, address, contactnumber, rank, status, region, examiner_id))
+        db.commit()
+        return redirect(url_for('examinerpage'))
+
+    # Fetch examiner’s info and dropdown options
+    examiner = db.execute('SELECT * FROM Examiners WHERE Id = ?', (examiner_id,)).fetchone()
+    ranks = db.execute('SELECT Rank FROM Role').fetchall()
+    statuses = db.execute('SELECT Type FROM Status').fetchall()
+    regions = db.execute('SELECT Number, Name FROM Region').fetchall()
+    return render_template('edit_examiner.html',
+                           examiner=examiner, ranks=ranks, statuses=statuses, regions=regions)
+
+@app.route('/edit-school/<school_code>', methods=['GET', 'POST'])
+def edit_school(school_code):
+    db = get_db()
+
+    if request.method == 'POST':
+        name = request.form['name']
+        region = request.form['region']
+
+        db.execute('''
+            UPDATE Schools
+            SET Name = ?, Region = ?
+            WHERE SchoolCode = ?
+        ''', (name, region, school_code))
+        db.commit()
+        return redirect(url_for('schoolpage'))
+
+    school = db.execute('SELECT * FROM Schools WHERE SchoolCode = ?', (school_code,)).fetchone()
+    regions = db.execute('SELECT Number, Name FROM Region').fetchall()
+    return render_template('edit_school.html', school=school, regions=regions)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Flask app</title>
+        <meta charset="UTF-8">
+        <title>WebApp</title>
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     </head>
-    <body>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/schools">Schools</a>
-            <a href="/examiners">Examiners</a>
-            <a href="/assessment">Assessments</a>
-            <a href="/view_post_exam">Post Exam</a>
-        </nav>
-        <hr>
-        {%block content%}{%endblock%}
+    <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">WebApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/schools">Schools</a></li>
+                <li class="nav-item"><a class="nav-link" href="/examiners">Examiners</a></li>
+                <li class="nav-item"><a class="nav-link" href="/assessment">Assessments</a></li>
+                <li class="nav-item"><a class="nav-link" href="/view_post_exam">Post Exam</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <div class="container">
+            {%block content%}{%endblock%}
+        </div>
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.css') }}"></script>
+        <style>
+            .table .examiner_table.active0 { background-color: lightgreen !important;}
+            .table .examiner_table.active1 { background-color: green !important;}
+
+
+            .table .examiner_table.not_active0{background-color: white !important;}
+            .table .examiner_table.not_active1{background-color: white  !important;}
+
+            .table .examiner_table.not_qualified0{background-color: yellow !important;}
+            .table .examiner_table.not_qualified1{background-color: yellow !important;}
+
+
+            .table .examiner_table.black_listed0{background-color: black !important; color: white;}
+            .table .examiner_table.black_listed1{background-color: black !important; color: white;}
+        </style>
     </body>
 </html>

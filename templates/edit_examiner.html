@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <h3 class="card-title mb-3">Edit Examiner</h3>
+
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Name:</label>
+          <input type="text" class="form-control" name="name" value="{{ examiner['Name'] }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Address:</label>
+          <input type="text" class="form-control" name="address" value="{{ examiner['Address'] }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Contact Number:</label>
+          <input type="text" class="form-control" name="contactnumber" value="{{ examiner['ContactNumber'] }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Rank:</label>
+          <select class="form-select" name="rank" required>
+            {% for r in ranks %}
+            <option value="{{ r['Rank'] }}" {% if examiner['Rank'] == r['Rank'] %}selected{% endif %}>
+              {{ r['Rank'] }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Status:</label>
+          <select class="form-select" name="status" required>
+            {% for s in statuses %}
+            <option value="{{ s['Type'] }}" {% if examiner['Status'] == s['Type'] %}selected{% endif %}>
+              {{ s['Type'] }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Region:</label>
+          <select class="form-select" name="region" required>
+            {% for reg in regions %}
+            <option value="{{ reg['Number'] }}" {% if examiner['Region'] == reg['Number'] %}selected{% endif %}>
+              {{ reg['Number'] }} - {{ reg['Name'] }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <a href="{{ url_for('examinerpage') }}" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

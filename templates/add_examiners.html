@@ -1,54 +1,60 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>Add Examiner</h1>
-<form method="POST">
-    <p>
-        <label>Name:</label>
-        <input type="text" name="name" required>
-    </p>
-    <p>
-        <label>Address:</label>
-        <input type="text" name="address" required>
-    </p>
-    <p>
-        <label>Contact Number:</label>
-        <input type="text" name="number" required>
-    </p>
-    <p>
-        <label>Rank:</label>
-        <select name="rank" required>
-            <option value="">-- Select Rank --</option>
-            {% for rank in ranks %}
-                <option value="{{ rank['Rank']}}">
-                    {{ rank['Rank']}}
-                </option>
-            {%endfor%}
-        </select>
-    </p>
-    <p>
-        <label>Status:</label>
-        <select name="status" required>
-            <option value="">-- Select Status --</option>
-            {% for status in statuses %}
-                <option value="{{ status['Type']}}">
-                    {{ status['Type']}}
-                </option>
-            {%endfor%}
-        </select>
-    </p>
-    <p>
-        <label>Region:</label>
-        <select name="region" required>
-            <option value="">-- Select Region --</option>
-            {% for region in regions %}
-                <option value="{{ region['Number']}}">
-                    {{ region['Number'] }} - {{ region['Name']}}
-                </option>
-            {%endfor%}
-        </select>
-    </p>
-    <p>
-        <button type="submit">Add examiner</button>
-    </p>
-</form>
+<div class="card shadow-sm p-4 mx-auto" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Add Examiner</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="number" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" id="number" name="number" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="rank" class="form-label">Rank</label>
+            <select class="form-select" id="rank" name="rank" required>
+                <option value="">-- Select Rank --</option>
+                {% for rank in ranks %}
+                    <option value="{{ rank['Rank'] }}">{{ rank['Rank'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status" required>
+                <option value="">-- Select Status --</option>
+                {% for status in statuses %}
+                    <option value="{{ status['Type'] }}">{{ status['Type'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="region" class="form-label">Region</label>
+            <select class="form-select" id="region" name="region" required>
+                <option value="">-- Select Region --</option>
+                {% for region in regions %}
+                    <option value="{{ region['Number'] }}">
+                        {{ region['Number'] }} - {{ region['Name'] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Add Examiner</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

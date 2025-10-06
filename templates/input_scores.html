@@ -1,44 +1,57 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>add</h1>
-<form method="POST">
-    <p>
-        <label>Name:</label>
-        <select name="name" id="examiner-select" required>
-            <option value="">-- Select Examiner --</option>
-            {% for e in examiners %}
-                <option value = "{{ e['Name']}}" data-id="{{ e['Id'] }}">
-                    {{ e['Name']}}
-                </option>
-            {%endfor%}
-        </select>
-        <input type ="hidden" name="examinerid" id="examiner-id">
-    </p>
-    <p>
-        <label>Exam:</label>
-        <select name="exam" required>
-            <option value="">-- Select Exam --</option>
-            {% for ex in exams %}
-                <option value = "{{ ex['Name']}}">
-                    {{ ex['Name']}}
-                </option>
-            {%endfor%}
-        </select>   
-    </p>
-    <p>
-        <label>Year:</label>
-        <input type="text" name="year" required>
-    </p>
-    <p>
-        <label>Score:</label>
-        <input type="number" name="score" min="0" max="100" required>
-    </p>
-    <p>
-        <button type="submit">Submit</button>
-    </p>
-</form>
+<div class="card shadow-sm p-4 mx-auto" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Input Examiner Scores</h2>
+
+    <form method="POST">
+        <!-- Examiner Selection -->
+        <div class="mb-3">
+            <label for="examiner-select" class="form-label">Examiner Name</label>
+            <select class="form-select" id="examiner-select" name="name" required>
+                <option value="">-- Select Examiner --</option>
+                {% for e in examiners %}
+                    <option value="{{ e['Name'] }}" data-id="{{ e['Id'] }}">
+                        {{ e['Name'] }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="examinerid" id="examiner-id">
+        </div>
+
+        <!-- Exam Selection -->
+        <div class="mb-3">
+            <label for="exam-select" class="form-label">Exam</label>
+            <select class="form-select" id="exam-select" name="exam" required>
+                <option value="">-- Select Exam --</option>
+                {% for ex in exams %}
+                    <option value="{{ ex['Name'] }}">{{ ex['Name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Year -->
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="number" class="form-control" id="year" name="year" value="{{ current_year }}" min="2000" max="2100" required>
+        </div>
+
+        <!-- Score -->
+        <div class="mb-3">
+            <label for="score" class="form-label">Score</label>
+            <input type="number" class="form-control" id="score" name="score" min="0" max="100" required>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Submit</button>
+        </div>
+    </form>
+</div>
+
 <script>
-    document.getElementById('examiner-select').addEventListener('change',function(){
+    // Set hidden examiner ID
+    document.getElementById('examiner-select').addEventListener('change', function(){
         const selectedOption = this.options[this.selectedIndex];
         document.getElementById('examiner-id').value = selectedOption.dataset.id;
     });

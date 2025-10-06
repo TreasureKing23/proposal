@@ -1,28 +1,54 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>SchoolList</h1>
-<form method="POST">
-    <p>
-        <label>School Code:</label>
-        <input type="text" name="school_code" required>
-    </p>
-    <p>
-        <label>Name:</label>
-        <input type="text" name="name" required>
-    </p>
-    <p>
-        <label>Region:</label>
-        <select name="region" required>
-            <option value="">-- Select Region --</option>
-            {% for region in regions %}
-                <option value="{{ region['Number']}}">
-                    {{ region['Number'] }} - {{ region['Name']}}
-                </option>
-            {%endfor%}
-        </select>
-    </p>
-    <p>
-        <button type="submit">Add School</button>
-    </p>
-</form>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">Schools</h1>
+</div>
+
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="mb-3">➕ Add New School</h4>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="school_code" class="form-label">School Code</label>
+            <input type="text" class="form-control" id="school_code" name="school_code" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">School Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="region" class="form-label">Region</label>
+            <select class="form-select" id="region" name="region" required>
+                <option value="">-- Select Region --</option>
+                {% for region in regions %}
+                    <option value="{{ region['Number'] }}">
+                        {{ region['Number'] }} - {{ region['Name'] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Save School</button>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>School Code</th>
+                <th>Name</th>
+                <th>Region</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for school in schools %}
+            <tr>
+                <td>{{ school['SchoolCode'] }}</td>
+                <td>{{ school['Name'] }}</td>
+                <td>{{ school['Region'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
